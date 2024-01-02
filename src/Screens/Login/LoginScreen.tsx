@@ -78,8 +78,6 @@ const LoginScreen= (props: {
       try {
         console.log(username, password)
         const response = await authLogin({username, password}).unwrap()
-
-        console.log(response);
         if (response) {
           // Store the JWT in AsyncStorage
           AsyncStorage.setItem('token', response.token);

@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API } from "../base";
 
 export interface User {
@@ -6,11 +7,14 @@ export interface User {
   name: string;
 }
 
-
+const token = AsyncStorage.getItem('token');
 const userApi = API.injectEndpoints({
   endpoints: (build) => ({
     getUser: build.query({
-      query: (id) => `users/${id}`,
+      query: (id) => ({
+        url: `users/${id}`,
+        method: 'GET',
+      }),
     }),
     updateUser: build.mutation({
       query: ({id,name, email}) => ({

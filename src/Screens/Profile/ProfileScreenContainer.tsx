@@ -10,10 +10,14 @@ const ProfileScreenContainer = () => {
   useLazyGetUserQuery();
   const dispatch = useDispatch();
   const [user, setUser] = useState({});
+  const handleFetchOne = async () =>{
+    await AsyncStorage.getItem("user").then((value) => {setUser(JSON.parse(value)) });
+    console.log(user.id);
+    await fetchOne(user.id);
+  }
   useEffect(() => {
-    AsyncStorage.getItem("user").then((value) => {setUser(JSON.parse(value)) });
     console.log('user',user);
-    fetchOne(user.id);
+    handleFetchOne();
     console.log(result);
     
     // dispatch(editprofile({ name: data.firstName + ' ' +data.lastName, email: data.email}));
