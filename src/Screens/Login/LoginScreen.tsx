@@ -18,7 +18,7 @@ import { RootStackParamList } from "@/Navigation";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoginUserMutation } from "@/Services/auth";
 const LoginScreenContainer = styled(Container)`
   width: 100%;
@@ -73,6 +73,7 @@ const LoginScreen= (props: {
     const [authLogin, authLoginResult] = useLoginUserMutation();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const user = useSelector((state) => state.profile);
     const dispatch = useDispatch();
     const handleLogin = async () => {
       try {
@@ -80,9 +81,12 @@ const LoginScreen= (props: {
         const response = await authLogin({username, password}).unwrap()
         if (response) {
           // Store the JWT in AsyncStorage
-          AsyncStorage.setItem('token', response.token);
+          await AsyncStorage.setItem('token', response.token);
           
-          AsyncStorage.setItem('user', JSON.stringify(response.user));
+          await AsyncStorage.setItem('user', response.user.id);
+          const value = await AsyncStorage.getItem('user');
+          console.log(response.user.id);
+          console.log(value);
           // Navigate to the home page
           props.navigation.reset({
             index: 0,

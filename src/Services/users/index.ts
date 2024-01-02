@@ -7,14 +7,10 @@ export interface User {
   name: string;
 }
 
-const token = AsyncStorage.getItem('token');
 const userApi = API.injectEndpoints({
   endpoints: (build) => ({
     getUser: build.query({
-      query: (id) => ({
-        url: `users/${id}`,
-        method: 'GET',
-      }),
+      query: (id) =>  `users/${id}`,
     }),
     updateUser: build.mutation({
       query: ({id,name, email}) => ({
@@ -28,4 +24,4 @@ const userApi = API.injectEndpoints({
 });
 
 
-export const { useLazyGetUserQuery, useUpdateUserMutation } = userApi;
+export const { useGetUserQuery, useUpdateUserMutation } = userApi;

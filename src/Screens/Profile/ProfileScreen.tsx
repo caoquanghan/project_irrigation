@@ -20,7 +20,7 @@ import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
 import { useSelector } from "react-redux";
 
-import { useLazyGetUserQuery } from "@/Services";
+import { useGetUserQuery } from "@/Services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProfileScreenContainer = styled(Container)`
   width: 100%;
@@ -64,14 +64,51 @@ const Circle = styled.View`
 const ProfileScreen = (props:{data: any}) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const result= useGetUserQuery(props.data);
+    console.log(props.data);
 
+    // useEffect(() => {
+    //   fetchOne(props.data);
+    //   console.log("data", props.data);
+    //   console.log(result);
+    //   // fetchOne(user.id);
+    //   // console.log('user', user);
+    //   // console.log(result);
+      
+    //   // dispatch(editprofile({ name: data.firstName + ' ' +data.lastName, email: data.email}));
+    // }, [fetchOne]);
+    // const [result] = useLazyGetUserQuery();
+    // const [user, setUser] = useState({});
+    // const [dataState, setDataState] = useState(props.data);
+
+    // const handleFetchOne = async () =>{
+    //   await AsyncStorage.getItem("user").then((value) => {setUser(JSON.parse(value)) });
+    //   console.log(user.id);
+    //   await fetchOne(user.id);
+    // }
+    // useEffect(() => {
+    //   console.log('user',user);
+    //   handleFetchOne();
+    //   console.log(result);
+      
+    //   // dispatch(editprofile({ name: data.firstName + ' ' +data.lastName, email: data.email}));
+    // }, [result]);
     // console.log(props.data)
   const handleLogout = async () => {
     // Remove the JWT from AsyncStorage
     await AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('user');
     // Navigate to the login page
-    navigation.navigate(RootScreens.LOGIN);
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name:RootScreens.LOGIN,
+        },
+      ],
+    });
   };
+
   return (
     <SafeAreaView
       style={{ flex: 1, width: "100%", backgroundColor: "#F9F9F9" }}
@@ -99,7 +136,7 @@ const ProfileScreen = (props:{data: any}) => {
               fontSize: 20,
             }}
           >
-            {props.data?.username}
+            {result.data.firstName + ' ' + result.data.lastName}
           </RegularText>
           </View>
           <FontAwesome
