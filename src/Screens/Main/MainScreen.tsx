@@ -109,9 +109,9 @@ const MainScreen= (
               Thêm nông trại
             </RegularText>
         </Pressable>
+        {result.isSuccess?
         <ItemContainer>
             {result.currentData.map((item, index) => {
-              console.log(item);
             return (
             <View key={index}>
               {/* <TreeItem {...item.id} {...item.name} {...item.model} {...item.timeOn}></TreeItem> */}
@@ -121,7 +121,9 @@ const MainScreen= (
               </View>
               )}
             )}
-            </ItemContainer>
+          </ItemContainer>
+          : <View> Đang cập nhật</View>
+        } 
       </MainScreenContainer>
     </SafeAreaView>
   );

@@ -61,12 +61,15 @@ const Circle = styled.View`
   justify-content: center;
   align-items: center;
 `;
-const ProfileScreen = (props:{data: any}) => {
+const ProfileScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const result= useGetUserQuery(props.data);
-    console.log(props.data);
-
+    const userId = useSelector((state) => state.profile.id);
+    const result= useGetUserQuery(userId);
+    console.log('userId',userId);
+    // const firstName = result.data.firstName? result.data.firstName: '';
+    // const lastName = result.data.lastName? result.data.lastName: '';
+    console.log('lastName',result);
     // useEffect(() => {
     //   fetchOne(props.data);
     //   console.log("data", props.data);
@@ -97,7 +100,7 @@ const ProfileScreen = (props:{data: any}) => {
   const handleLogout = async () => {
     // Remove the JWT from AsyncStorage
     await AsyncStorage.removeItem('token');
-    await AsyncStorage.removeItem('user');
+    // await AsyncStorage.removeItem('user');
     // Navigate to the login page
     navigation.reset({
       index: 0,
@@ -136,7 +139,7 @@ const ProfileScreen = (props:{data: any}) => {
               fontSize: 20,
             }}
           >
-            {result.data.firstName + ' ' + result.data.lastName}
+            {result.isSuccess? (result.data.firstName? result.data.firstName: '' + ' ' + result.data.lastName? result.data.lastName: ''): ''}
           </RegularText>
           </View>
           <FontAwesome

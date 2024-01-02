@@ -1,21 +1,26 @@
-import { useLazyGetUserQuery } from "@/Services";
 import ProfileScreen from "./ProfileScreen";
-import { useEffect, useState } from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from "react-redux";
-import { editprofile } from "@/Store/reducers/profile";
-
 const ProfileScreenContainer = () => {
-  // // const [fetchOne, result] = useLazyGetUserQuery();
-  // // const dispatch = useDispatch();
+  // // // const [fetchOne, result] = useLazyGetUserQuery();
+  // // // const dispatch = useDispatch();
   // const [user, setUser] = useState('');
-  const handleFetchOne = async () =>{
-    const value = await AsyncStorage.getItem('user');
-    console.log(value);
-  }
-  // handleFetchOne();
- console.log(handleFetchOne());
-
-  return <ProfileScreen data={handleFetchOne()} ></ProfileScreen>;
+  // const myFunction = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('user');
+  //     if(value !== null) {
+  //       // value previously stored
+  //       const parsedValue = JSON.parse(value);
+  //       setUser(parsedValue)
+  //     }
+  //   } catch(e) {
+  //     // error reading value
+  //     console.log('Failed to fetch the data from storage')
+  //   }
+  // }
+  // // handleFetchOne();
+  // useEffect( ()=>{
+  //   myFunction();
+  // },[user]);
+  // console.log(user);
+  return <ProfileScreen ></ProfileScreen>;
 };
 export default ProfileScreenContainer;

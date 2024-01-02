@@ -30,6 +30,6 @@ const profileSlice = createSlice({
   },
 });
 
-export const { editprofile } = profileSlice.actions;
+export const { addUser } = profileSlice.actions;
 
 export const profileReducers = profileSlice.reducer;
