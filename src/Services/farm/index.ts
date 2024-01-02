@@ -17,9 +17,11 @@ export interface Farm {
 
 const farmApi = API.injectEndpoints({
   endpoints: (build) => ({
-    getFarmList: build.query({
-      query: () => `farms`,
-    }),
+    getFarmList: build.query<Farm[], void>(
+      {
+        query: () => 'farms',
+      }
+    ),
     getFarm: build.query({
       query: (id) => `farm/${id}/`,
     }),
